@@ -1,0 +1,36 @@
+const { EmbedBuilder } = require("discord.js");
+module.exports = {
+  data: {
+    name: `LOA`,
+  },
+  async execute(interaction, client) {
+    const IGN = interaction.fields.getTextInputValue("IGN");
+    const duration = interaction.fields.getTextInputValue("DURATION");
+    const reason = interaction.fields.getTextInputValue("REASON");
+    const channel = interaction.channel;
+
+    const embed = new EmbedBuilder()
+      .setTitle("LEAVE OF ABSENCE")
+      .setColor(0x02f3136)
+      .setAuthor({
+        name: `${interaction.user.tag}`,
+        iconURL: interaction.user.displayAvatarURL({ dynamic: true }),
+      })
+      .addFields(
+        { name: `IGN:`, value: `${IGN}`, inline: false },
+        { name: `Duration:`, value: `${duration}`, inline: false},
+        { name: `Reason:`, value: `${reason}`, inline: false },
+      )
+      .setTimestamp();
+
+    await channel
+      .send({
+        embeds: [embed],
+      });
+    interaction.reply({
+      content: "A leave of absence post has been successfully created!",
+      ephemeral: true,
+    }).catch((error) => console.log(error));
+  },
+};
+

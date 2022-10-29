@@ -1,0 +1,74 @@
+const {
+    ModalBuilder,
+    ActionRowBuilder,
+    TextInputBuilder,
+    TextInputStyle,
+    PermissionFlagsBits,
+  } = require("discord.js");
+  require("dotenv").config();
+  module.exports = {
+    data: {
+      name: `staffLOA`,
+    },
+    async execute(interaction) {
+      if (
+        interaction.member.permissions.has(PermissionFlagsBits.ModerateMembers)
+      ) {
+        const channel = await interaction.client.channels.fetch(
+          process.env.LOAchannel
+        );
+        if (interaction.channel == channel) {
+          const modal = new ModalBuilder()
+            .setCustomId(`LOA`)
+            .setTitle(`LEAVE OF ABSENCE`);
+  
+          const titleInput = new TextInputBuilder()
+            .setCustomId(`IGN`)
+            .setLabel("IGN?")
+            .setPlaceholder("ex. *deqressing.*")
+            .setRequired(true)
+            .setStyle(TextInputStyle.Short)
+            .setMinLength(1)
+            .setMaxLength(30);
+          const PunishStyle = new TextInputBuilder()
+            .setCustomId(`DURATION`)
+            .setLabel("How long are you gonna be gone for?")
+            .setPlaceholder("ex. *3 days.*")
+            .setRequired(true)
+            .setStyle(TextInputStyle.Short)
+            .setMinLength(1)
+            .setMaxLength(20);
+  
+          const Reason = new TextInputBuilder()
+            .setCustomId(`REASON`)
+            .setLabel("Reason of the LOA?")
+            .setPlaceholder("ex. *Family matter.*")
+            .setRequired(true)
+            .setStyle(TextInputStyle.Paragraph)
+            .setMinLength(1)
+            .setMaxLength(100);
+  
+          const first = new ActionRowBuilder().addComponents(titleInput);
+          const second = new ActionRowBuilder().addComponents(PunishStyle);
+          const third = new ActionRowBuilder().addComponents(Reason);
+  
+          // Add inputs to the modal
+          modal.addComponents(first, second, third);
+  
+          await interaction.showModal(modal);
+        } else {
+          return interaction.reply({
+            content: `You can't use that in ${interaction.channel}! Use ${channel}.`,
+            ephemeral: true,
+          });
+        }
+      } else {
+        return interaction.reply({
+          content: "You do not have permissions to use this!",
+          ephemeral: true,
+        });
+      }
+    },
+  };
+  
+  

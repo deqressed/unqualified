@@ -1,0 +1,24 @@
+{
+  "name": "unqualified",
+  "version": "1.0.0",
+  "description": "",
+  "main": "src/index.js",
+  "scripts": {
+    "test": "node ."
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/deqressed/unqualified.git"
+  },
+  "author": "deqressing",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/deqressed/unqualified/issues"
+  },
+  "homepage": "https://github.com/deqressed/unqualified#readme",
+  "dependencies": {
+    "chalk": "^4.1.2",
+    "discord.js": "^14.6.0",
+    "dotenv": "^16.0.3"
+  }
+}
